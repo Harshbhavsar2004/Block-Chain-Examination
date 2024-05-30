@@ -1,0 +1,37 @@
+.questiontext {
+    /* background-color: #f5f5f5; */
+    padding: 20px;
+    font-size: 16px;
+    text-align: left;
+    /* border: 1px solid #ccc; */
+    /* border-radius: 5px; */
+  }
+  
+  .questiontext {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .option {
+    margin-bottom: 5px;
+    /* text-align: left; */
+    float: left;
+  }
+
+  .answer {
+    text-align: left;
+    /* float: left; */
+    /* font-weight: bold; */
+  }
+  
+  /* .correct {
+    color: green;
+  }
+  
+  .incorrect {
+    color: red;
+  } 
+  
+   .answerOptions {
+    text-align: left;
+  } */

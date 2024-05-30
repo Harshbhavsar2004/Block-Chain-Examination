@@ -1,0 +1,92 @@
+/* Dashboard.css */
+
+/* Container styles */
+.bucket {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+/* Profile card styles */
+.profile-card {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.profile-card img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-right: 20px;
+  object-fit: cover;
+  border: 3px solid #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Profile info styles */
+.profile-info h2 {
+  margin-bottom: 10px;
+  font-size: 24px;
+  color: #333;
+}
+
+.profile-info p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+/* Profile more details styles */
+.profile-more {
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.profile-more p {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Loading spinner styles */
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.loader {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #333;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+.button-Css{
+  width: 150px;
+  height: 40px;
+  color: white;
+  background-color: black;
+  border: none;
+  outline: none;
+}

@@ -1,0 +1,14 @@
+
+header {
+    display: grid;
+    grid-template-columns: 15fr 1fr;
+    align-items: center;
+  }
+
+  header h1 {
+    text-align: center;
+  }
+  
+  
+  
+  

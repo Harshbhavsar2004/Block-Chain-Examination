@@ -1,0 +1,42 @@
+header {
+    width: 101%;
+    height: 80px;
+    /* box-shadow: 0 0 10px -7px rgba(0,0,0,0.7); */
+
+    box-shadow: 0 5px 10px -7px rgba(0, 0, 0, 0.7);
+    /* Added "6px" for bottom shadow */
+}
+
+
+
+header nav {
+    max-width: 85%;
+    height: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header nav h1 {
+    color: #2d3748;
+    font-size: 1.8rem;
+}
+
+/* ****************************************** Logo css Code ****************************************************************** */
+.logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo img {
+    width: 75px;
+    margin-right: 20px; /* adjust this value as needed */
+    margin-top: 5;
+  }
+  
+  /* *********************************************************************************************************** */
+
+header nav .avtar {
+    cursor: pointer;
+}
