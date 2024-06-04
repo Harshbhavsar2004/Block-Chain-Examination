@@ -44,7 +44,7 @@ const Profile = () => {
     const logoutuser = async () => {
         let token = localStorage.getItem("usersdatatoken");
 
-        const res = await fetch("https://backendofmam.onrender.com/logout", {
+        const res = await fetch("http://localhost:3000/logout", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

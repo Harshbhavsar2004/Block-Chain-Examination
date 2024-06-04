@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import vision from 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import "./Posestyle.css";
 const { FaceLandmarker, FilesetResolver, DrawingUtils } = vision;
 
 const FaceDetection = () => {
@@ -94,6 +95,7 @@ const FaceDetection = () => {
                 }
               }
               handleLookError(results.faceBlendshapes);
+
             } catch (error) {
               console.error('Error during face detection:', error);
             }
@@ -110,9 +112,9 @@ const FaceDetection = () => {
   }, [webcamRunning, faceLandmarker]);
 
   const handleLookError = (blendShapes) => {
-    const currentTime = Date.now();
-    if (blendShapes[0].categories[13].score >= 0.9 && !showLeftToast) { // Check if left toast is not already shown
-      setShowLeftToast(true);
+    // console.log(blendShapes);
+    // const currentTime = Date.now();
+    if (blendShapes[0].categories[13].score >= 0.9 ) { // Check if left toast is not already shown
       toast.error("WARNING!! You are looking left", {
         position: "top-right",
         autoClose: 5000,
@@ -121,11 +123,10 @@ const FaceDetection = () => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        onClose: () => setShowLeftToast(false), // Set show left toast to false when toast is closed
+    // Set show left toast to false when toast is closed
       });
     }
-    if (blendShapes[0].categories[14].score >= 0.9 && !showRightToast) { // Check if right toast is not already shown
-      setShowRightToast(true);
+    if (blendShapes[0].categories[14].score >= 0.9 ) { // Check if right toast is not already showns
       toast.error("WARNING!! You are looking right", {
         position: "top-right",
         autoClose: 5000,
@@ -134,13 +135,13 @@ const FaceDetection = () => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        onClose: () => setShowRightToast(false), // Set show right toast to false when toast is closed
+     // Set show right toast to false when toast is closed
       });
     }
   };
 
   return (
-    <div>
+    <div className='harshthebob'>
       <video ref={videoRef} autoPlay />
       <canvas ref={canvasRef} />
       <ul id="blend-shapes"></ul>

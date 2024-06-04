@@ -1,119 +1,136 @@
-// why below code isn't working when we use face-api.js librery before running this code:
-import React,{useRef} from 'react'
-import swal from 'sweetalert';
-import * as posenet from '@tensorflow-models/posenet';
-import Webcam from 'react-webcam';
+import React, { useEffect, useRef, useState } from 'react';
+import vision from 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3';
 
-import "./Detections.css";
+const { FaceLandmarker, FilesetResolver, DrawingUtils } = vision;
 
+const FaceDetection = () => {
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+  const [faceLandmarker, setFaceLandmarker] = useState(null);
+  const [webcamRunning, setWebcamRunning] = useState(false);
+  const videoWidth = 480;
+  const [results, setResults] = useState(undefined);
 
-const Posenet = () => {
-  const webcamRef=useRef(null);
-  const canvasRef=useRef(null);
+  useEffect(() => {
+    async function createFaceLandmarker() {
+      const filesetResolver = await FilesetResolver.forVisionTasks(
+        'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/wasm'
+      );
+      const faceLandmarker = await FaceLandmarker.createFromOptions(filesetResolver, {
+        baseOptions: {
+          modelAssetPath: `https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task`,
+          delegate: 'GPU',
+        },
+        outputFaceBlendshapes: true,
+        runningMode: 'VIDEO',
+        numFaces: 1,
+      });
+      setFaceLandmarker(faceLandmarker);
+    }
 
-//  Load posenet
-const runPosenet = async () => {
-  const net = await posenet.load({
-    architecture: 'ResNet50',
-    quantBytes: 2,
-    inputResolution: { width: 100, height: 100 },
-    scale: 0.6,
-  });
-  //
-  setInterval(() => {
-    detect(net);
-  }, 1500);
+    createFaceLandmarker();
+  }, []);
+
+  useEffect(() => {
+    if (webcamRunning && faceLandmarker) {
+      const video = videoRef.current;
+      const canvas = canvasRef.current;
+      const canvasCtx = canvas.getContext('2d');
+
+      let lastVideoTime = -1;
+      const drawingUtils = new DrawingUtils(canvasCtx);
+
+      const predictWebcam = async () => {
+        if (video && canvas) {
+          const ratio = video.videoHeight / video.videoWidth;
+          video.style.width = `${videoWidth}px`;
+          video.style.height = `${videoWidth * ratio}px`;
+          canvas.style.width = `${videoWidth}px`;
+          canvas.style.height = `${videoWidth * ratio}px`;
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+
+          let startTimeMs = performance.now();
+          if (lastVideoTime !== video.currentTime) {
+            lastVideoTime = video.currentTime;
+            const results = await faceLandmarker.detectForVideo(video, startTimeMs);
+            setResults(results);
+            canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (results.faceLandmarks) {
+              for (const landmarks of results.faceLandmarks) {
+                drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_TESSELATION, { color: '#C0C0C070', lineWidth: 1 });
+                drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_RIGHT_EYE, { color: '#FF3030' });
+                drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_RIGHT_EYEBROW, { color: '#FF3030' });
+                drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_LEFT_EYE, { color: '#30FF30' });
+                drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_LEFT_EYEBROW, { color: '#30FF30' });
+                drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_FACE_OVAL, { color: '#E0E0E0' });
+                drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_LIPS, { color: '#E0E0E0' });
+                drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_RIGHT_IRIS, { color: '#FF3030' });
+                drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_LEFT_IRIS, { color: '#30FF30' });
+              }
+            }
+
+            drawBlendShapes(results.faceBlendshapes);
+          }
+
+          if (webcamRunning) {
+            requestAnimationFrame(predictWebcam);
+          }
+        }
+      };
+
+      predictWebcam();
+    }
+  }, [webcamRunning, faceLandmarker]);
+
+  const drawBlendShapes = (blendShapes) => {
+    const blendShapesContainer = document.getElementById('blend-shapes');
+    if (!blendShapes.length || !blendShapesContainer) return;
+
+    let htmlMaker = '';
+    blendShapes[0].categories.forEach((shape) => {
+      htmlMaker += `
+        <li class="blend-shapes-item">
+          <span class="blend-shapes-label">${shape.displayName || shape.categoryName}</span>
+          <span class="blend-shapes-value" style="width: calc(${shape.score * 100}% - 120px)">${shape.score.toFixed(4)}</span>
+        </li>
+      `;
+    });
+
+    blendShapesContainer.innerHTML = htmlMaker;
+  };
+
+  const enableCam = () => {
+    if (!faceLandmarker) {
+      console.log('Wait! faceLandmarker not loaded yet.');
+      return;
+    }
+
+    setWebcamRunning((prevState) => !prevState);
+
+    const constraints = { video: true };
+    navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+        videoRef.current.addEventListener('loadeddata', () => setWebcamRunning(true));
+      }
+    });
+  };
+
+  return (
+    <div>
+      <button onClick={enableCam}>
+        {webcamRunning ? 'DISABLE PREDICTIONS' : 'ENABLE PREDICTIONS'}
+      </button>
+      <video ref={videoRef} autoPlay />
+      <canvas ref={canvasRef} style={{
+        width:"500px",
+        height:"500px",
+      }}/>
+      <ul id="blend-shapes"></ul>
+    </div>
+  );
 };
 
-const detect = async (net) => {
-  if (
-    typeof webcamRef.current !== "undefined" &&
-    webcamRef.current !== null &&
-    webcamRef.current.video.readyState === 4
-  ) {
-    // Get Video Properties
-    const video = webcamRef.current.video;
-    // const videoWidth = webcamRef.current.video.videoWidth;
-    // const videoHeight = webcamRef.current.video.videoHeight;
-
-    // Set video width
-    // webcamRef.current.video.width = videoWidth;
-    // webcamRef.current.video.height = videoHeight;
-
-    // Make Detections
-    const pose = await net.estimateSinglePose(video);
-    // console.log(pose);
-
-    EarsDetect(pose["keypoints"], 0.8);
-
-    // drawCanvas(pose, video, videoWidth, videoHeight, canvasRef);
-  }
-};
-
-// const drawCanvas = (pose, video, videoWidth, videoHeight, canvas) => {
-//   const ctx = canvas.current.getContext("2d");
-//   canvas.current.width = videoWidth;
-//   canvas.current.height = videoHeight;
-
-//   drawKeypoints(pose["keypoints"], 0.6, ctx);
-//   drawSkeleton(pose["keypoints"], 0.7, ctx);
-// };
-
-const EarsDetect=(keypoints, minConfidence) =>{
-  //console.log("Checked")
-  const keypointEarR = keypoints[3];
-  const keypointEarL = keypoints[4];
-
-  if(keypointEarL.score<minConfidence){
-    swal("You looked away from the Screen (To the Right)")
-  }
-  if (keypointEarR.score<minConfidence){
-    swal("You looked away from the Screen (To the Left)")
-  }
-}
-
-runPosenet();
-  return (<div>
-    <Webcam
-          ref={webcamRef}
-          className="size"
-          autoPlay
-          playsInline
-          muted
-          width= "100"
-          height= "100"
-          style={{
-            // position: "absolute",
-            // marginLeft: "auto",
-            // marginRight: "auto",
-            // left: 0,
-            // right: 0,
-            // textAlign: "center",
-            // zindex: 9,
-            // width: 200,
-            // height: 200,
-          }}
-        />
-
-        <canvas
-          ref={canvasRef}
-          className="size"
-          width="100"
-          height="100"
-          style={{
-            // position: "absolute",
-            // marginLeft: "auto",
-            // marginRight: "auto",
-            // left: 0,
-            // right: 0,
-            // textAlign: "center",
-            // zindex: 9,
-            // width: 200,
-            // height: 200,
-          }}
-        />
-  </div>
-  )
-}
-
-export default Posenet;
+export default FaceDetection;

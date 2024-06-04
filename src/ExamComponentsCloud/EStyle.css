@@ -1,8 +1,7 @@
 header {
-  margin-left: 100px;
-display: flex;
-justify-content: space-evenly;
-align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 header h1 {
@@ -18,7 +17,6 @@ header h1 {
   float: left;
   margin-top: 80px;
   margin-left: 70px;
-
 }
 
 .question-box h1 {
@@ -42,7 +40,7 @@ hr {
 .option-list {
   margin-left: 3%;
 }
-.buttons{
+.buttons {
   margin-left: 20px;
 }
 .button {
@@ -125,7 +123,7 @@ hr {
   margin-left: 20px;
   float: left;
 }
-.buttons-box-container{
+.buttons-box-container {
   width: 150;
   height: 150;
   display: flex;
@@ -137,7 +135,7 @@ hr {
   overflow: hidden;
   margin: auto 10px;
 }
-.buttons-box p{
+.buttons-box p {
   margin-left: 5px;
 }
 .nv {
@@ -151,31 +149,25 @@ hr {
   background-color: red;
   width: 40px;
   height: 40px;
-
 }
 .amr {
   color: white;
   background-color: #008cba;
   width: 40px;
   height: 40px;
-
 }
 .a {
   color: white;
   background-color: green;
   width: 40px;
   height: 40px;
-
 }
 .mr {
   color: white;
   background-color: rgb(240, 180, 17);
   width: 40px;
   height: 40px;
-
 }
-
-
 
 .mark-box {
   background: #fff;

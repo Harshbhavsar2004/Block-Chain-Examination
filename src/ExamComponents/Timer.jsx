@@ -75,7 +75,7 @@ const Timer = () => {
   }, []);
 
   return (
-    <div className="king" style={{}}>
+    <div className="king" >
       <p>Time Left:{timer}</p>
     </div>
   );

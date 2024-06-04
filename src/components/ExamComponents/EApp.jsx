@@ -7,6 +7,7 @@ import Quiz from "./Quiz";
 // import Mic from "./Mic";
 
 import './EStyle.css'
+import FaceDetection from "./Pose_Detection";
 
 function App() {
   return (
@@ -14,6 +15,8 @@ function App() {
       <Header />
       <Quiz />
       <Footer />
+      <FaceDetection/>
+    
       {/* <WebCam /> */}
     </div>
   );
