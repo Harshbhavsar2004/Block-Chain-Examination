@@ -14,7 +14,7 @@ const Dashboard = () => {
 
     const DashboardValid = async () => {
         let token = localStorage.getItem('usersdatatoken');
-        const res = await fetch('http://localhost:3000/validuser', {
+        const res = await fetch('https://backendofmam.onrender.com/validuser', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

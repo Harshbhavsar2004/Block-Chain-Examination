@@ -36,6 +36,7 @@ const Header = () => {
     const data = await res.json();
     console.log(data);
 
+<<<<<<< HEAD
     if (data.status === 201) {
       console.log("User Logout");
       localStorage.removeItem("usersdatatoken");
@@ -43,6 +44,32 @@ const Header = () => {
       window.location.href("/signup");
     } else {
       console.log("Error");
+=======
+    const logoutuser = async () => {
+        let token = localStorage.getItem("usersdatatoken");
+        console.log(token);
+        const res = await fetch("https://backendofmam.onrender.com/logout", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": token,
+                Accept: "application/json"
+            },
+            credentials: "include"
+        });
+
+        const data = await res.json();
+        console.log(data);
+
+        if (data.status === 201) {
+            console.log("User Logout");
+            localStorage.removeItem("usersdatatoken");
+            setLoginData(false)
+            window.location.href("/signup")
+        } else {
+            console.log("Error");
+        }
+>>>>>>> 7e63d532284a502335ae819ba13d85abd4cb9bed
     }
   };
 
@@ -164,4 +191,60 @@ const Header = () => {
   );
 };
 
+<<<<<<< HEAD
 export default Header;
+=======
+                    </div>
+
+                    <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        MenuListProps={{
+                            'aria-labelledby': 'basic-button',
+                        }}
+                    >
+                        {
+                            logindata.ValidUserOne ? (
+                                <>
+                                    <MenuItem onClick={() => {
+                                        goDash()
+                                        handleClose()
+                                    }}>Profile</MenuItem>
+                                    <MenuItem onClick={() => {
+                                        goExDash()
+                                        handleClose()
+                                    }}>Exam Dashboard</MenuItem>
+                                    <MenuItem onClick={() => {
+                                        logoutuser()
+                                        handleClose()
+                                    }}>Logout</MenuItem>
+                                </>
+                            ) : (
+                                <>
+                                    <MenuItem onClick={() => {
+                                        goLogin()
+                                        handleClose()
+                                    }}>Sign In</MenuItem>
+                                    <MenuItem onClick={() => {
+                                        goRegister()
+                                        handleClose()
+                                    }}>Sign Up</MenuItem>
+                                    <MenuItem onClick={() => {
+                                        goError()
+                                        handleClose()
+                                    }}>Profile</MenuItem>
+                                </>
+                            )
+                        }
+
+                    </Menu>
+                </nav>
+            </header>
+        </>
+    )
+}
+
+export default Header
+>>>>>>> 7e63d532284a502335ae819ba13d85abd4cb9bed
