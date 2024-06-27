@@ -1,13 +1,9 @@
 import React from "react";
-import Header from "./Header";
-import Footer from "./Footer";
-import Quiz from "./Quiz";
-
-// import WebCam from "./WebCam";
-// import Mic from "./Mic";
-
+import Header from "./OtherComponents/Header/Header";
+import Footer from "./OtherComponents/Footer/Footer";
+import Quiz from "./MainComponent/Quiz";
 import './EStyle.css'
-import FaceDetection from "./PoseDetection/Pose_Detection";
+
 
 function App() {
   return (
@@ -15,8 +11,6 @@ function App() {
       <Header />
       <Quiz />
       <Footer />
-      {/* <FaceDetection/> */}
-      {/* <WebCam /> */}
     </div>
   );
 }

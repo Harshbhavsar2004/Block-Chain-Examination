@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import vision from 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import swal from 'sweetalert';
+import './Posestyle.css';
 const { FaceLandmarker, FilesetResolver, DrawingUtils } = vision;
 
 const FaceDetection = () => {
@@ -94,6 +94,7 @@ const FaceDetection = () => {
                 }
               }
               handleLookError(results.faceBlendshapes);
+
             } catch (error) {
               console.error('Error during face detection:', error);
             }
@@ -110,41 +111,33 @@ const FaceDetection = () => {
   }, [webcamRunning, faceLandmarker]);
 
   const handleLookError = (blendShapes) => {
-    const currentTime = Date.now();
-    if (blendShapes[0].categories[13].score >= 0.9 && !showLeftToast) { // Check if left toast is not already shown
-      setShowLeftToast(true);
-      toast.error("WARNING!! You are looking left", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        onClose: () => setShowLeftToast(false), // Set show left toast to false when toast is closed
-      });
+    if (blendShapes[0].categories[13].score >= 0.9) {
+        swal({
+            title: "WARNING!!",
+            text: "You are looking left",
+            icon: "warning",
+            button: "OK",
+            timer: 5000,
+        });
     }
-    if (blendShapes[0].categories[14].score >= 0.9 && !showRightToast) { // Check if right toast is not already shown
-      setShowRightToast(true);
-      toast.error("WARNING!! You are looking right", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        onClose: () => setShowRightToast(false), // Set show right toast to false when toast is closed
-      });
+
+    if (blendShapes[0].categories[14].score >= 0.9) {
+        swal({
+            title: "WARNING!!",
+            text: "You are looking right",
+            icon: "warning",
+            button: "OK",
+            timer: 5000,
+        });
     }
-  };
+};
+
 
   return (
-    <div>
+    <div className='harshthebob'>
       <video ref={videoRef} autoPlay />
       <canvas ref={canvasRef} />
       <ul id="blend-shapes"></ul>
-      <ToastContainer />
     </div>
   );
 };

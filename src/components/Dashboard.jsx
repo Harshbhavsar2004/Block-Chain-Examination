@@ -5,7 +5,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import Header from './Header';
 import './Dashboard.css';
-
+import Swal from 'sweetalert2';
 const Dashboard = () => {
     const { logindata, setLoginData } = useContext(LoginContext);
     const [data, setData] = useState(false);
@@ -14,7 +14,7 @@ const Dashboard = () => {
 
     const DashboardValid = async () => {
         let token = localStorage.getItem('usersdatatoken');
-        const res = await fetch('https://backendofmam.onrender.com/validuser', {
+        const res = await fetch('http://localhost:3000/validuser', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -35,7 +35,26 @@ const Dashboard = () => {
     const goToExamDashboard = () => {
         history('/examDashboard');
     };
-
+   
+    const CheckResult = () =>{
+        const storedScore = localStorage.getItem('score');
+  
+        if (storedScore) {
+          Swal.fire({
+            title: 'Your Score',
+            text: `Your score is ${storedScore} / 6`,
+            icon: 'Title',
+            confirmButtonText: 'OK'
+          });
+        } else {
+          Swal.fire({
+            title: 'Score Not Found',
+            text: 'No score found',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        }
+    }
     useEffect(() => {
         setTimeout(() => {
             DashboardValid();
@@ -71,6 +90,7 @@ const Dashboard = () => {
                         </div>
                     </div>
                     <button onClick={goToExamDashboard} className='button-Css'>GO to DashBoard</button>
+                    <button onClick={CheckResult} className='button-Css'>Check the Result</button>
                 </div>
             ) : (
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>

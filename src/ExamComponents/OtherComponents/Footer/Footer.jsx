@@ -1,16 +1,14 @@
 import React from "react";
-// import WebCam from "./WebCam";
-import Mic from "./Mic";
-import QuizFullScreenExit from "./QuizFullScreenExit";
+import Mic from "../Detections/Mic";
+import QuizFullScreenExit from "../../MainComponent/QuizFullScreenExit";
 
 function Footer() {
   const currentYear = new Date().getFullYear();
   return (
-    // <WebCam />
+   
     <footer>
       <Mic />
       <QuizFullScreenExit />
-    {/* //   <p>Copyright ⓒ {currentYear}</p> */}
     </footer>
   );
 }

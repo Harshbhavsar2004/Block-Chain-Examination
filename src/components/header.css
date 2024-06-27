@@ -1,56 +1,51 @@
-header {
-    width: 101%;
-    height: 80px;
-    /* box-shadow: 0 0 10px -7px rgba(0,0,0,0.7); */
-
-    box-shadow: 0 5px 10px -7px rgba(0, 0, 0, 0.7);
-    /* Added "6px" for bottom shadow */
-}
-
-
-
-.harshalthe  nav {
-    max-width: 100%;
-    height: 10vh;
-    margin: auto;
+.harshalthe {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba( 255, 255, 255, 0.6 );
-    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-    backdrop-filter: blur( 9.5px );
-    -webkit-backdrop-filter: blur( 9.5px );
-    border-radius: 10px;
-    border: 1px solid rgba( 255, 255, 255, 0.18 );
-}
-
-.harshalthe  nav h1 {
-    color: #2d3748;
-    font-size: 1.8rem;
-}
-
-/* ****************************************** Logo css Code ****************************************************************** */
-.logo {
+  }
+  
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .logo {
     display: flex;
     align-items: center;
-    margin-left: 200px;
   }
   
   .logo img {
-    width: 75px;
-    margin-right: 20px; /* adjust this value as needed */
-    margin-top: 5;
+    height: 50px;
+    margin-right: 10px;
   }
   
-  /* *********************************************************************************************************** */
-
-.avtar {
+  .logo h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #3f2020;
+    text-align: center;
+  }
+  
+  .logo hr {
+    width: 100%;
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    margin: 0;
+  }
+  
+  .avatar {
     cursor: pointer;
-    margin-right: 180px;
-    
-}
-
-
-.harshalthe .logo h2{
-   font-weight: 200;
-}
+  }
+  
+  .Menu {
+    margin-top: 10px;
+  }
+  

@@ -7,7 +7,7 @@ import PolicyPageCloud from "./components/PolicyPageCloud";
 import HomePage from "./components/HomePage";
 import HomePageCloud from "./components/HomePageCloud";
 import EApp from './ExamComponents/EApp';
-import EAppCloud from './ExamComponentsCloud/EAppCloud';
+// import EAppCloud from './ExamComponentsCloud/EAppCloud';
 
 // import Header from "./components/Header";
 import Login from "./components/Login";
@@ -85,7 +85,7 @@ function App() {
               <Route path="/home" element={<HomePage />} />
               <Route path="/homecloud" element={<HomePageCloud />} />
               <Route path='/eapp' element={ <EApp/> } />
-              <Route path='/eappcloud' element={ <EAppCloud/> } />
+              {/* <Route path='/eappcloud' element={ <EAppCloud/> } /> */}
 
               <Route path="*" element={<Error />} />
             </Routes>

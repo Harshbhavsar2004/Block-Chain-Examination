@@ -31,24 +31,6 @@ const ExamDetails = () => {
                             </div>
                         </div>
                     </div>
-
-                    <div className="form_data">
-                        <div className="exam-card">
-                            <img src="./Cloud_Computing_(ExamDashboard).jpeg" alt="exam-thumbnail" className="exam-thumbnail" />
-                            <div className="exam-info">
-                                <h2>Cloud Computing Exam</h2>
-                                <p>Date: April 30, 2023</p>
-                                <p>Time: 10:00 AM - 12:00 PM</p>
-                                <p>Duration: 2 hours</p>
-                                <p>Location: Online</p>
-                                <Link to="/policyCloud">
-                                    <button className="btn btn-primary1" type="submit"><span> Start Exam </span></button>
-                                </Link>
-                                {/* <button className="btn btn-primary1">Start Exam</button> */}
-                            </div>
-                        </div>
-                    </div>
-
                 </nav>
             </div>
         </>

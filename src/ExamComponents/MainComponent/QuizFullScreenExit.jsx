@@ -1,4 +1,4 @@
-// // correct the following code like after pressing ESC key don't exit full screen
+// correct the following code like after pressing ESC key don't exit full screen
 
 // import React, { useEffect } from 'react';
 // import swal from 'sweetalert';
@@ -62,37 +62,12 @@
 // export default App;
 
 
-// *********************************************************************************************
-
-// import React, { useEffect } from "react";
-
-// function App() {
-//   useEffect(() => {
-//     document.addEventListener("keydown", handleKeyDown, false);
-
-//     return () => {
-//       document.removeEventListener("keydown", handleKeyDown, false);
-//     };
-//   }, []);
-
-//   const handleKeyDown = (event) => {
-//     if (event.key === "Escape") {
-//       event.preventDefault();
-//     }
-//   };
-
-//   // return <div>My App</div>;
-// }
-
-// export default App;
-
-
 // ************************************** New Logout + Esc key code *******************************************************
 // the below code first exit fullscreen mode after pressing ESC key and then show warning but i want to direct show logout warning without exit fullscreen so modify the below code as per requirements:
 
 import React, { useEffect, useContext } from 'react';
 import swal from 'sweetalert';
-import { LoginContext } from '../components/ContextProvider/Context';
+import { LoginContext } from '../../components/ContextProvider/Context';
 import { useNavigate } from 'react-router-dom';
 
 function App() {
@@ -156,3 +131,9 @@ function App() {
 }
 
 export default App;
+
+
+
+
+// --------------------------------------------------------------------------------------------
+

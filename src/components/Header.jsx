@@ -1,250 +1,139 @@
 import React, { useContext } from "react";
 import Avatar from "@mui/material/Avatar";
-import "./header.css";
-import { LoginContext } from "./ContextProvider/Context";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
+import { LoginContext } from "./ContextProvider/Context";
+import "./header.css";
 
 const Header = () => {
   const { logindata, setLoginData } = useContext(LoginContext);
-
-  const history = useNavigate();
-
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  const logoutuser = async () => {
-    let token = localStorage.getItem("usersdatatoken");
-    console.log(token);
-    const res = await fetch("http://localhost:3000/logout", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-        Accept: "application/json",
-      },
-      credentials: "include",
-    });
-
-    const data = await res.json();
-    console.log(data);
-
-<<<<<<< HEAD
-    if (data.status === 201) {
-      console.log("User Logout");
+  const logoutuser = () => {
+    try {
       localStorage.removeItem("usersdatatoken");
       setLoginData(false);
-      window.location.href("/signup");
-    } else {
-      console.log("Error");
-=======
-    const logoutuser = async () => {
-        let token = localStorage.getItem("usersdatatoken");
-        console.log(token);
-        const res = await fetch("https://backendofmam.onrender.com/logout", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": token,
-                Accept: "application/json"
-            },
-            credentials: "include"
-        });
-
-        const data = await res.json();
-        console.log(data);
-
-        if (data.status === 201) {
-            console.log("User Logout");
-            localStorage.removeItem("usersdatatoken");
-            setLoginData(false)
-            window.location.href("/signup")
-        } else {
-            console.log("Error");
-        }
->>>>>>> 7e63d532284a502335ae819ba13d85abd4cb9bed
+      navigate("/login");
+    } catch (error) {
+      console.error("An error occurred during logout", error);
     }
   };
+  
+  
+  
 
   const goDash = () => {
-    history("/dash");
+    navigate("/dash");
   };
 
   const goExDash = () => {
-    history("/examDashboard");
+    navigate("/examDashboard");
   };
 
   const goLogin = () => {
-    history("/login");
+    navigate("/login");
   };
 
   const goRegister = () => {
-    history("/register");
+    navigate("/register");
   };
 
   const goError = () => {
-    history("*");
+    navigate("*");
   };
 
   return (
-     <div className="harshalthe">
-         
-        <nav>
-          <div className="logo">
-            <img src="./App_Logo1.png" alt="" />
-    <h2>Secure Pariksha</h2>
-    <hr />
-            
-          </div>
-          <div className="avtar">
-            {logindata.ValidUserOne ? (
-              <Avatar
-                style={{
-                  background: "salmon",
-                  fontWeight: "bold",
-                  textTransform: "capitalize",
+    <div className="harshalthe">
+      <nav>
+        <div className="logo">
+          <img src="./App_Logo1.png" alt="App Logo" />
+          <h2>Secure Pariksha</h2>
+          <hr />
+        </div>
+        <div className="avatar">
+          {logindata.ValidUserOne ? (
+            <Avatar
+              style={{
+                background: "salmon",
+                fontWeight: "bold",
+                textTransform: "capitalize",
+              }}
+              onClick={handleClick}
+            >
+              {logindata.ValidUserOne.fname[0].toUpperCase()}
+            </Avatar>
+          ) : (
+            <Avatar style={{ background: "blue" }} onClick={handleClick} />
+          )}
+        </div>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
+          }}
+        >
+          {logindata.ValidUserOne ? (
+            <>
+              <MenuItem
+                onClick={() => {
+                  goDash();
+                  handleClose();
                 }}
-                onClick={handleClick}
               >
-                {logindata.ValidUserOne.fname[0].toUpperCase()}
-              </Avatar>
-            ) : (
-              <Avatar style={{ background: "blue" }} onClick={handleClick} />
-            )}
-          </div>
-
-          <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            MenuListProps={{
-              "aria-labelledby": "basic-button",
-            }}
-          >
-            {logindata.ValidUserOne ? (
-              <>
-                <MenuItem
-                  onClick={() => {
-                    goDash();
-                    handleClose();
-                  }}
-                >
-                  Profile
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    goExDash();
-                    handleClose();
-                  }}
-                >
-                  Exam Dashboard
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    logoutuser();
-                    handleClose();
-                  }}
-                >
-                  Logout
-                </MenuItem>
-              </>
-            ) : (
-              <>
-                <MenuItem
-                  onClick={() => {
-                    goLogin();
-                    handleClose();
-                  }}
-                >
-                  Sign In
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    goRegister();
-                    handleClose();
-                  }}
-                >
-                  Sign Up
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    goError();
-                    handleClose();
-                  }}
-                >
-                  Profile
-                </MenuItem>
-              </>
-            )}
-          </Menu>
-        </nav>
-      
-     </div>
+                Profile
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  goExDash();
+                  handleClose();
+                }}
+              >
+                Exam Dashboard
+              </MenuItem>
+              <MenuItem
+                onClick={logoutuser}
+              >
+                Logout
+              </MenuItem>
+            </>
+          ) : (
+            <>
+              <MenuItem
+                onClick={() => {
+                  goLogin();
+                  handleClose();
+                }}
+              >
+                Sign In
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  goRegister();
+                  handleClose();
+                }}
+              >
+                Sign Up
+              </MenuItem>
+            </>
+          )}
+        </Menu>
+      </nav>
+    </div>
   );
 };
 
-<<<<<<< HEAD
 export default Header;
-=======
-                    </div>
-
-                    <Menu
-                        id="basic-menu"
-                        anchorEl={anchorEl}
-                        open={open}
-                        onClose={handleClose}
-                        MenuListProps={{
-                            'aria-labelledby': 'basic-button',
-                        }}
-                    >
-                        {
-                            logindata.ValidUserOne ? (
-                                <>
-                                    <MenuItem onClick={() => {
-                                        goDash()
-                                        handleClose()
-                                    }}>Profile</MenuItem>
-                                    <MenuItem onClick={() => {
-                                        goExDash()
-                                        handleClose()
-                                    }}>Exam Dashboard</MenuItem>
-                                    <MenuItem onClick={() => {
-                                        logoutuser()
-                                        handleClose()
-                                    }}>Logout</MenuItem>
-                                </>
-                            ) : (
-                                <>
-                                    <MenuItem onClick={() => {
-                                        goLogin()
-                                        handleClose()
-                                    }}>Sign In</MenuItem>
-                                    <MenuItem onClick={() => {
-                                        goRegister()
-                                        handleClose()
-                                    }}>Sign Up</MenuItem>
-                                    <MenuItem onClick={() => {
-                                        goError()
-                                        handleClose()
-                                    }}>Profile</MenuItem>
-                                </>
-                            )
-                        }
-
-                    </Menu>
-                </nav>
-            </header>
-        </>
-    )
-}
-
-export default Header
->>>>>>> 7e63d532284a502335ae819ba13d85abd4cb9bed
