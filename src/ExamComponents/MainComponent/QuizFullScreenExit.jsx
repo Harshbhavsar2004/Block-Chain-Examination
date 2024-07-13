@@ -1,70 +1,3 @@
-// correct the following code like after pressing ESC key don't exit full screen
-
-// import React, { useEffect } from 'react';
-// import swal from 'sweetalert';
-
-// function App() {
-
-//   useEffect(() => {
-//     function handleKeyDown(event) {
-//       if (event.keyCode === 27) {
-//         swal('Warning', 'Escape key pressed', 'warning');
-//       }
-//     }
-
-//     document.addEventListener("keydown", handleKeyDown);
-
-//     return () => {
-//       document.removeEventListener("keydown", handleKeyDown);
-//     };
-//   }, []);
-
-//   // return (
-//   //   <div>
-//   //     {/* <h1>My App</h1>
-//   //     <p>Press the Escape key to show the pop-up alert</p> */}
-//   //   </div>
-//   // );
-// }
-
-// export default App;
-
-// *************************************************************************************************
-
-// import React, { useEffect } from 'react';
-// import swal from 'sweetalert';
-
-// function App() {
-
-//   useEffect(() => {
-//     function handleKeyDown(event) {
-//       if (event.keyCode === 27) {
-//         event.preventDefault();
-//         swal('Warning', 'Escape key pressed', 'warning');
-//       }
-//     }
-
-//     document.addEventListener("keydown", handleKeyDown);
-
-//     return () => {
-//       document.removeEventListener("keydown", handleKeyDown);
-//     };
-//   }, []);
-
-//   return (
-//     <div>
-//       <h1>My App</h1>
-//       <p>Press the Escape key to show the pop-up alert</p>
-//     </div>
-//   );
-// }
-
-// export default App;
-
-
-// ************************************** New Logout + Esc key code *******************************************************
-// the below code first exit fullscreen mode after pressing ESC key and then show warning but i want to direct show logout warning without exit fullscreen so modify the below code as per requirements:
-
 import React, { useEffect, useContext } from 'react';
 import swal from 'sweetalert';
 import { LoginContext } from '../../components/ContextProvider/Context';
@@ -100,7 +33,7 @@ function App() {
   const logoutuser = async () => {
     let token = localStorage.getItem('usersdatatoken');
 
-    const res = await fetch('https://backendofmam.onrender.com/logout', {
+    const res = await fetch('https://block-chain-backend.onrender.com/logout', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

@@ -55,7 +55,7 @@ const Profile = () => {
   // User Validation Function
   const DashboardValid = async () => {
     let token = localStorage.getItem("usersdatatoken");
-    const res = await fetch("https://backendofmam.onrender.com/validuser", {
+    const res = await fetch("https://block-chain-backend.onrender.com/validuser", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -239,7 +239,7 @@ const Profile = () => {
         </span>
       </p>
       <div className="text-center">
-        <FullScreen handle={handle}>
+        <FullScreen handle={handle} >
           <Link to="/eapp">
             <button
               onClick={handle.enter}

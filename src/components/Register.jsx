@@ -149,7 +149,7 @@ const Register = () => {
                 formData.append("password", inpval.password);
                 formData.append("cpassword", inpval.cpassword);
 
-                const data = await fetch("https://backendofmam.onrender.com/register", {
+                const data = await fetch("https://block-chain-backend.onrender.com/register", {
                     method: "POST",
                     // headers: {
                     //     "Content-Type": "application/json"

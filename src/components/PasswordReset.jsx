@@ -25,7 +25,7 @@ const PasswordReset = () => {
                 position: "top-center"
             });
         } else {
-            const res = await fetch("https://backendofmam.onrender.com/sendpasswordlink", {
+            const res = await fetch("https://block-chain-backend.onrender.com/sendpasswordlink", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

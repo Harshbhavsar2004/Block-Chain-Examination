@@ -4,6 +4,8 @@ import "./QuestionData.css";
 import QuizStatus from "./QuizStatus"; // Adjust the path as per your file structure
 import FaceDetection from "../OtherComponents/Detections/Pose_Detection";
 import QuizNavigation from "./QuizNavigation";
+import { FullScreen } from "react-full-screen";
+import ResizeComponent from "../../components/Fullscreen2";
 const Quiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState(Array(questions.length).fill(null));
@@ -52,7 +54,6 @@ const Quiz = () => {
     handleAnswerOptionClick(index);
   };
 
-  // Function to submit quiz and calculate score
   const handleSubmitAndClose = async () => {
     let newScore = 0;
     answers.forEach((answer, index) => {
@@ -61,16 +62,58 @@ const Quiz = () => {
       }
     });
     setScore(newScore);
-    setIsSubmitted(true);
+    setIsSubmitted(!isSubmitted);
 
-    // Example: Store score in localStorage
-    localStorage.setItem("score", newScore.toString());
+    // Send score to the backend
+    const token = localStorage.getItem('usersdatatoken');
+    try {
+      const response = await fetch('https://block-chain-backend.onrender.com/score', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ Score: newScore })
+      });
+      
+      if (response.ok) {
+        console.log('Score saved to backend');
+      } else {
+        console.error('Error saving score to backend', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error saving score to backend', error);
+    }
   };
 
-  const handleHome = () => {
-    window.location.href = "/dash"; // Adjust the URL as per your application
+  const handleHome = async () => {
+    // Call resetCounts endpoint
+    const token = localStorage.getItem('usersdatatoken'); // Assuming token is saved in localStorage
+
+    try {
+      const response = await fetch('https://block-chain-backend.onrender.com/resetCounts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+      } else {
+        swal("Error", "Failed to reset counts", "error");
+      }
+
+      // Redirect to home page
+      window.location.href = "/dash"; // Adjust the URL as per your application
+    } catch (error) {
+      console.error('Error resetting counts:', error);
+      swal("Error", "Failed to reset counts", "error");
+    }
   };
 
+  // Render result if quiz is submitted
   // Render result if quiz is submitted
   if (isSubmitted) {
     return (
@@ -81,7 +124,7 @@ const Quiz = () => {
         <button onClick={handleHome}>Go to Home Page</button>
       </div>
     );
-  }
+  } 
 
   // Render quiz questions and answer options
   return (
@@ -148,6 +191,9 @@ const Quiz = () => {
           totalQuestions={questions.length}
           setCurrentQuestion={setCurrentQuestion}
         />
+      </div>
+      <div>
+        <ResizeComponent/>
       </div>
     </div>
   );

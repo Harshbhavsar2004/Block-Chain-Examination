@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import vision from 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3';
 import swal from 'sweetalert';
 import './Posestyle.css';
+import ThresholdChecker from './Model2';
+import Threeshold from './Model2';
 const { FaceLandmarker, FilesetResolver, DrawingUtils } = vision;
 
 const FaceDetection = () => {
@@ -11,9 +13,6 @@ const FaceDetection = () => {
   const [webcamRunning, setWebcamRunning] = useState(true); // Start with webcamRunning as true
   const videoWidth = 480;
   const [results, setResults] = useState(undefined);
-  const [lookCount, setLookCount] = useState(0);
-  const [showLeftToast, setShowLeftToast] = useState(false);
-  const [showRightToast, setShowRightToast] = useState(false);
 
   useEffect(() => {
     async function createFaceLandmarker() {
@@ -110,7 +109,9 @@ const FaceDetection = () => {
     }
   }, [webcamRunning, faceLandmarker]);
 
-  const handleLookError = (blendShapes) => {
+  const handleLookError = async (blendShapes) => {
+    const token = localStorage.getItem('usersdatatoken'); // Assuming token is saved in localStorage
+
     if (blendShapes[0].categories[13].score >= 0.9) {
         swal({
             title: "WARNING!!",
@@ -119,6 +120,20 @@ const FaceDetection = () => {
             button: "OK",
             timer: 5000,
         });
+
+        // Increment leftCount and send to backend
+        try {
+            await fetch('https://block-chain-backend.onrender.com/left', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ left: true })
+              });
+        } catch (error) {
+            console.error('Error sending left count to backend:', error);
+        }
     }
 
     if (blendShapes[0].categories[14].score >= 0.9) {
@@ -129,15 +144,29 @@ const FaceDetection = () => {
             button: "OK",
             timer: 5000,
         });
+
+        // Increment rightCount and send to backend
+        try {
+            await fetch('https://block-chain-backend.onrender.com/right', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ right: true })
+            });
+        } catch (error) {
+            console.error('Error sending right count to backend:', error);
+        }
     }
 };
-
 
   return (
     <div className='harshthebob'>
       <video ref={videoRef} autoPlay />
       <canvas ref={canvasRef} />
       <ul id="blend-shapes"></ul>
+      <Threeshold/>
     </div>
   );
 };

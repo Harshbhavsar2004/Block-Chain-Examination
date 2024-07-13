@@ -17,14 +17,16 @@ class App extends Component {
 
                     <div className="form_data_policy">
                         <ul className="list">
-                            <li><p> Please use latest Google Chrome browser for taking examination. </p></li>
-                            <li><p> Be sure that no‐body is sitting with you. </p></li>
-                            <li><p> Close all browsers/tabs before starting the online examination. </p></li>
-                            <li><p> Do not leave the camera. </p></li>
-                            <li><p> Do not resize the browser during the exam. </p></li>
-                            <li><p> Once the exam starts, do not switch to any other window/tab. </p></li>
-                            <li><p> Warning are only shows when you do something unfair activity. </p></li>
-                            <li><p> Make sure you have uninterrupted internet connection during the exam. </p></li>
+                            <li><p>Please use the latest Google Chrome browser for taking the examination.</p></li>
+                            <li><p>Be sure that nobody is sitting with you.</p></li>
+                            <li><p>Close all browsers/tabs before starting the online examination.</p></li>
+                            <li><p>Do not leave the camera.</p></li>
+                            <li><p>Do not resize the browser during the exam.</p></li>
+                            <li><p>Once the exam starts, do not switch to any other window/tab.</p></li>
+                            <li><p>Warnings are only shown when you engage in unfair activity.</p></li>
+                            <li><p>Make sure you have an uninterrupted internet connection during the exam.</p></li>
+                            <li><p><strong>If any misbehavior is caught more than 5 times, the exam will be suspended</strong>.</p></li>
+
                         </ul>
                         <div className="content">
                             <div>

@@ -92,3 +92,25 @@
   margin: 0px 20px;
   cursor: pointer;
 }
+
+
+.phrase-main p {
+  font-size: 1.2rem; /* Slightly larger font size */
+  color: #333; /* Darker text color */
+  margin-bottom: 20px; /* Space between the paragraph and button */
+}
+
+.phrase-main button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #007bff; /* Bootstrap primary blue color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.phrase-main button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}

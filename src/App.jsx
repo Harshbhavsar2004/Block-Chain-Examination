@@ -21,7 +21,7 @@ import Box from '@mui/material/Box';
 import { Routes, Route, useNavigate } from "react-router-dom"
 import { useEffect, useContext, useState } from "react";
 import { LoginContext } from "./components/ContextProvider/Context";
-
+import FullScreenExample from "./components/Fullscreen2";
 // import "./App.css"
 
 function App() {
@@ -36,7 +36,7 @@ function App() {
   const DashboardValid = async () => {
     let token = localStorage.getItem("usersdatatoken");
 
-    const res = await fetch("https://backendofmam.onrender.com/validuser", {
+    const res = await fetch("https://backendofmam.on.com/validuser", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -85,6 +85,7 @@ function App() {
               <Route path="/home" element={<HomePage />} />
               <Route path="/homecloud" element={<HomePageCloud />} />
               <Route path='/eapp' element={ <EApp/> } />
+              <Route path="/fullscreen" element={ <FullScreenExample/> } />
               {/* <Route path='/eappcloud' element={ <EAppCloud/> } /> */}
 
               <Route path="*" element={<Error />} />
@@ -96,6 +97,8 @@ function App() {
           <CircularProgress />
         </Box>
       }
+
+
     </>
   );
 }
