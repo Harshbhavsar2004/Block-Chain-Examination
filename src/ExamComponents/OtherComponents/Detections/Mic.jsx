@@ -18,7 +18,7 @@ function AudioDetector() {
                 const checkAudio = () => {
                     analyzer.getByteFrequencyData(dataArray);
                     const avg = dataArray.reduce((acc, val) => acc + val) / bufferLength;
-                    if (avg > 80) { // adjust this threshold to suit your needs
+                    if (avg > 100) { // adjust this threshold to suit your needs
                         setAlert(true);
                         setCount(prevCount => prevCount + 1); // Increment Count variable
                         swal("Voice Detected", "Action has been recorded", "error");
